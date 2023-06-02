@@ -2,6 +2,8 @@
 
 Este é um script escrito em Python para realizar web scraping de produtos no site do Mercado Livre. O objetivo é extrair informações sobre os produtos, como título, preço, descrição, imagens, tags e SKU, e salvá-las em um arquivo CSV para uso posterior.
 
+Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer importação dos mesmos. Tentei deixar o script comentado o máximno possível.
+
 ## Funcionalidades
 
 - O script acessa a página de busca do Mercado Livre para obter uma lista de produtos relacionados a um determinado termo de pesquisa.
