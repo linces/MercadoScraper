@@ -27,10 +27,13 @@ Este é um script escrito em Python para realizar web scraping de produtos no si
 ## Observações
 
 - O script foi desenvolvido para extrair informações de produtos relacionados a texturas do V-Ray no Mercado Livre, mas pode ser adaptado para outras categorias de produtos ou sites semelhantes.
-- É importante respeitar os termos de uso e políticas de scraping do site em questão ao utilizar este script.
 - O código inclui comentários detalhados explicando as diferentes partes e funcionalidades do script.
 - Sinta-se à vontade para modificar o código para atender às suas necessidades específicas.
 
-## Disclaimer
+## "Disclaimer" de Cool é Rola.
 
-Este script foi desenvolvido apenas para fins educacionais e não deve ser usado para fins comerciais ou violar os termos de serviço de qualquer site. O scraping de sites pode ser uma atividade legalmente questionável ou proibida, portanto, use-o com responsabilidade e verifique as políticas e termos de uso do site antes de realizar qualquer ação de scraping.
+Sabe esse blablabla de: 
+
+"Este script foi desenvolvido apenas para fins educacionais e não deve ser usado para fins comerciais ou violar os termos de serviço de qualquer site. O scraping de sites pode ser uma atividade legalmente questionável ou proibida, portanto, use-o com responsabilidade e verifique as políticas e termos de uso do site antes de realizar qualquer ação de scraping."
+
+Esquece isso, é pra torá o pau mesmo.
