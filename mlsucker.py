@@ -8,22 +8,24 @@ from urllib.parse import urljoin
 import time
 import random
 
-def get_value(node, nome, valor_default=''):
-    campo = node.find(nome, class_="price-tag-fraction")
-    if campo is None:
-        return valor_default
-    return campo.text
-
-def get_cents(node, nome, valor_default=''):
-    campo = node.find(nome, class_="price-tag-cents")
-    if campo is None:
-        return valor_default
-    return campo.text
+def get_price(node):
+    # Função para obter o preço do nó da página
+    price_node = node.find('span', class_='andes-money-amount__fraction')
+    cents_node = node.find('span', class_='andes-money-amount__decimals')
+    
+    if price_node is not None:
+        price = price_node.text.strip()
+        if cents_node is not None:
+            price += ',' + cents_node.text.strip()
+        return price
+    return None
 
 i = 1
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0'}
 termo_busca = input("Digite o termo de busca: ")
+tags = input("Digite as tags separadas por vírgulas: ").split(',')
+
 base_url = f"https://lista.mercadolivre.com.br/{termo_busca}"
 
 # Caminho e nome do arquivo CSV
@@ -66,7 +68,6 @@ attribute_visible_default = ''  # Visibilidade do atributo em branco
 attribute_global_default = ''  # Global do atributo em branco
 attribute_default_default = ''  # Valor padrão do atributo em branco
 
-
 with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
     writer = csv.writer(arquivo_csv, delimiter=',')
     writer.writerow([
@@ -84,34 +85,17 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
             page = requests.get(base_url, headers=headers)
             soup = BeautifulSoup(page.text, "html.parser")
 
-            valor = ''  
-
             for div in soup.find_all('div', class_='ui-search-result__content-wrapper'):
                 produto = div.find('h2', class_='ui-search-item__title')
                 link = div.find("a", class_="ui-search-link")
-                valor_node = div.find('span', class_='price-tag-fraction')
-                cents_node = div.find('span', class_='price-tag-cents')
 
-                if valor_node is not None:
-                    valor = valor_node.text.strip()
-                    if cents_node is not None:
-                        valor += ',' + cents_node.text.strip()
-
-                    valor_float = float(valor.replace('.', '').replace(',', '.'))
-
-                    # Desconto de 12%
-                    valor_desconto = valor_float * 0.88
-                    valor_desconto_str = "{:.2f}".format(valor_desconto).replace('.', ',')
-                else:
-                    valor_desconto_str = ''
+                # Obter preço usando a função get_price
+                valor_desconto_str = get_price(div)
 
                 imagens = []
                 video = ''
 
-                if div.find("p", class_="ui-search-item__shipping ui-search-item__shipping--free") is None:
-                    frete_gratis = False
-                else:
-                    frete_gratis = True
+                frete_gratis = bool(div.find("p", class_="ui-search-item__shipping ui-search-item__shipping--free"))
 
                 if link is not None:
                     response_produto = requests.get(link['href'], headers=headers)
@@ -128,7 +112,8 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
                     # Quando não encontrar uma descrição, inserir o título do produto
                     descricao_text = '<h1>' + produto.text + '</h1>\n\n' + produto.text
 
-                imagem_tags = site_produto.find_all('img', class_='ui-pdp-image')
+                #imagem_tags = site_produto.find_all('img', class_='ui-pdp-image')  
+                imagem_tags = site_produto.find_all('img', class_='class="ui-pdp-image ui-pdp-gallery__figure__image"')
 
                 for imagem in imagem_tags:
                     if 'data-src' in imagem.attrs:
@@ -139,23 +124,11 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
 
                 imagens_str = ', '.join(imagens)
 
-                tags = []
-
-                tags_div = site_produto.find('div', class_='ui-pdp-attributes__value-list')
-                if tags_div:
-                    tags_links = tags_div.find_all('a')
-                    tags = [tag_link.text for tag_link in tags_links]
-
-                sku = ''
-
-                sku_span = site_produto.find('span', class_='ui-pdp-buybox__sku-value')
-                if sku_span:
-                    sku = sku_span.text.strip()
+                sku = site_produto.find('span', class_='ui-pdp-buybox__sku-value')
+                if sku:
+                    sku = sku.get_text(strip=True, separator='\n')
                 else:
                     sku = '' + ''.join(random.choices('6789', k=13))
-
-                if not tags:
-                    tags = ['Ferramentas']
 
                 writer.writerow([
                     i, 'simple', sku, produto.text, published_default, is_featured_default, visibility_default,
@@ -163,27 +136,27 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
                     date_sale_price_ends_default, tax_status_default, tax_class_default, in_stock_default,
                     stock_default, low_stock_amount_default, backorders_allowed_default, sold_individually_default,
                     weight_default, length_default, width_default, height_default, allow_customer_reviews_default,
-                    purchase_note_default, valor_desconto_str, valor, 'Ferramentas', ', '.join(tags), shipping_class_default,
-                    imagens_str, download_limit_default, download_expiry_days_default, parent_default,
-                    grouped_products_default, upsells_default, cross_sells_default, external_url_default,
-                    button_text_default, position_default, attribute_name_default, attribute_value_default,
-                    attribute_visible_default, attribute_global_default, attribute_default_default, video
+                    purchase_note_default, valor_desconto_str, valor_desconto_str, ', '.join(tags), ', '.join(tags),
+                    shipping_class_default, ', '.join(imagens), download_limit_default, download_expiry_days_default,
+                    parent_default, grouped_products_default, upsells_default, cross_sells_default,
+                    external_url_default, button_text_default, position_default, attribute_name_default,
+                    attribute_value_default, attribute_visible_default, attribute_global_default,
+                    attribute_default_default, video
                 ])
 
-                print('Código: ' + str(i) + ', Produto: ' + produto.text + ', Valor: ' + valor_desconto_str)
-
+                print('Código: ' + str(i) + ', Produto: ' + produto.text + ', Valor: ' + str(valor_desconto_str))
                 print("==========================")
 
-                if link is not None:
+                if link:
                     print('Link: ' + link['href'])
 
-                if descricao:
+                if descricao_text:
                     print('Descrição do produto: ' + descricao_text)
                 else:
                     print('Descrição do produto não encontrada.')
 
-                if imagens_str:
-                    print('Imagens: ' + imagens_str)
+                if imagens:
+                    print('Imagens: ' + ', '.join(imagens))
                 else:
                     print('Nenhuma imagem encontrada.')
 
@@ -221,7 +194,6 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
             print(caminho_arquivo)
 
             break
-
 
 print("Arquivo CSV salvo com sucesso:")
 print(caminho_arquivo)
