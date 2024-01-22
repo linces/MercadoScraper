@@ -32,10 +32,10 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
 - O código inclui comentários detalhados explicando as diferentes partes e funcionalidades do script.
 - Sinta-se à vontade para modificar o código para atender às suas necessidades específicas.
 
-## "Disclaimer" de Cool é Rola.
+## "Disclaimer".
 
-Sabe esse blablabla de: 
+Sabe esse blablabla que: 
 
 "Este script foi desenvolvido apenas para fins educacionais e não deve ser usado para fins comerciais ou violar os termos de serviço de qualquer site. O scraping de sites pode ser uma atividade legalmente questionável ou proibida, portanto, use-o com responsabilidade e verifique as políticas e termos de uso do site antes de realizar qualquer ação de scraping."
 
-Esquece isso, é pra torá o pau mesmo.
+Esquece isso, é pra torá o pau mesmo. Esse script foi escrito para tirar proveito das técnicas de scraping. Pra economizar tempo e dinheiro que seria gasto cadastrando produtos que vc já encontra tudo mastigado no ML.
