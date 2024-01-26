@@ -22,14 +22,50 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
 
 - **Adaptação para SoftArena:** Substitui variações de "MercadoLivre" por "SoftArena" na descrição dos produtos.
 
-## Como usar o script
+## Uso do Script de Web Scraping para Produtos do Mercado Livre
 
-1. Certifique-se de ter o Python instalado em seu sistema.
-2. Clone o repositório e navegue até o diretório onde o script está localizado.
-3. Instale as bibliotecas necessárias especificadas no código (`requests`, `beautifulsoup4`, `csv`).
-4. Execute o script usando o comando `python nome_do_script.py`.
-5. Aguarde o processamento das páginas e a criação do arquivo CSV.
-6. O arquivo CSV será salvo no mesmo diretório do script com o nome `dados_produtos_ml_texturas.csv`.
+#### 1. **Parâmetros de Entrada:**
+   - **Termo de Busca:** Um termo específico para pesquisar produtos no Mercado Livre.
+   - **Tags:** Palavras-chave adicionais separadas por vírgulas para categorizar os produtos.
+   - **Categoria:** A categoria à qual os produtos pertencem.
+
+#### 2. **Execução do Script:**
+   - O script é executado em um ambiente Python (certifique-se de ter o Python instalado).
+   - Clone o repositório e navegue até o diretório onde o script está localizado.
+   - Instale as bibliotecas necessárias (`requests`, `beautifulsoup4`, `csv`) especificadas no código.
+   - Execute o script usando o comando `python nome_do_script.py`.
+   - Durante a execução, o script solicitará que você insira o termo de busca, tags e categoria.
+
+#### 3. **Saída do Script:**
+   - Um arquivo CSV é gerado no mesmo diretório do script.
+   - O arquivo CSV segue uma estrutura predefinida de colunas para importação no WooCommerce.
+   - As informações extraídas incluem ID, tipo, SKU, nome, preço, descrição, imagens, tags, etc.
+
+#### 4. **Observações Importantes:**
+   - O script foi desenvolvido para fins educacionais e pode violar os termos de serviço do Mercado Livre.
+   - Foi projetado para economizar tempo no cadastro de produtos, automatizando a extração de informações do Mercado Livre.
+   - Use com responsabilidade e verifique as políticas do Mercado Livre antes de usar para evitar problemas legais.
+
+#### 5. **Customização:**
+   - O código inclui comentários detalhados para facilitar a compreensão e modificações.
+   - Pode ser adaptado para outras categorias de produtos ou sites semelhantes.
+
+### Exemplo de Execução:
+
+1. **Entrada:**
+   - Termo de Busca: "câmera digital"
+   - Tags: "tecnologia, fotografia"
+   - Categoria: "Eletrônicos"
+
+2. **Execução:**
+   - O script percorre o Mercado Livre, coleta informações sobre câmeras digitais e gera um arquivo CSV.
+
+3. **Saída:**
+   - Um arquivo CSV chamado `dados_produtos_ml_camera_digital.csv` é criado.
+
+4. **Customização:**
+   - Se necessário, ajuste as configurações padrão e estrutura das colunas conforme suas necessidades.
+
 
 ## Observações
 
