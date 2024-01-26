@@ -6,16 +6,21 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
 
 ## Funcionalidades
 
-- O script acessa a página de busca do Mercado Livre para obter uma lista de produtos relacionados a um determinado termo de pesquisa.
-- Utiliza a biblioteca BeautifulSoup para analisar o HTML da página e extrair as informações desejadas.
-- O script percorre os resultados da pesquisa, coletando informações como título, preço, descrição, imagens, tags e SKU de cada produto.
-- Realiza algumas transformações nos dados para formatá-los adequadamente antes de escrevê-los no arquivo CSV.
-- Verifica se as imagens têm um tamanho mínimo e se o conteúdo é uma imagem válida.
-- Aplica um desconto de 12% ao preço original do produto.
-- Gera um SKU aleatório para os produtos que não possuem SKU no site.
-- Salva as informações coletadas no arquivo CSV, seguindo uma estrutura pré-definida de colunas.
-- O script lida com várias páginas de resultados, navegando para a próxima página até que não haja mais páginas disponíveis.
-- Inclui um mecanismo de espera de 2 segundos entre as solicitações para evitar bloqueio por sobrecarga no servidor.
+- **Obtenção de Preços:** O script utiliza a função `get_price` para extrair o preço dos produtos, considerando valores e centavos quando disponíveis.
+
+- **Coleta de Informações:** Percorre os resultados da pesquisa no Mercado Livre, coletando informações como título, preço, descrição, imagens, tags e SKU de cada produto.
+
+- **Transformações nos Dados:** Realiza transformações nos dados, aplicando um desconto de 12% ao preço original e gerando SKUs aleatórios para produtos sem SKU no site.
+
+- **Salvamento em CSV:** As informações coletadas são salvas em um arquivo CSV seguindo uma estrutura predefinida de colunas, compatível com o formato utilizado pelo WooCommerce.
+
+- **Navegação entre Páginas:** Lida com várias páginas de resultados, navegando para a próxima página até que não haja mais disponíveis.
+
+- **Espera entre Solicitações:** Inclui um mecanismo de espera de 0.5 a 2.5 segundos entre as solicitações para evitar bloqueio por sobrecarga no servidor.
+
+- **Exibição de Informações:** Exibe no console informações relevantes sobre cada produto, como código, título, valor com desconto, link, descrição, imagens, vídeo, frete grátis, SKU e tags.
+
+- **Adaptação para SoftArena:** Substitui variações de "MercadoLivre" por "SoftArena" na descrição dos produtos.
 
 ## Como usar o script
 
@@ -28,9 +33,9 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
 
 ## Observações
 
-- O script foi desenvolvido para extrair informações de produtos relacionados a texturas do V-Ray no Mercado Livre, mas pode ser adaptado para outras categorias de produtos ou sites semelhantes.
-- O código inclui comentários detalhados explicando as diferentes partes e funcionalidades do script.
-- Sinta-se à vontade para modificar o código para atender às suas necessidades específicas.
+- O script foi originalmente desenvolvido para extrair informações de texturas do V-Ray no Mercado Livre, mas pode ser adaptado para outras categorias de produtos ou sites semelhantes.
+- O código inclui comentários detalhados explicando as diferentes partes e funcionalidades.
+- Este script foi desenvolvido para fins práticos e de automação. Utilize-o com responsabilidade e sempre respeite os termos de serviço do site de origem.
 
 ## "Disclaimer".
 
