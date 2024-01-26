@@ -25,6 +25,8 @@ i = 1
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0'}
 termo_busca = input("Digite o termo de busca: ")
 tags = input("Digite as tags separadas por vírgulas: ").split(',')
+categoria = input("Digite a categoria dos produtos: ")
+
 
 base_url = f"https://lista.mercadolivre.com.br/{termo_busca}"
 
@@ -112,15 +114,12 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
                     # Quando não encontrar uma descrição, inserir o título do produto
                     descricao_text = '<h1>' + produto.text + '</h1>\n\n' + produto.text
 
-                #imagem_tags = site_produto.find_all('img', class_='ui-pdp-image')  
-                imagem_tags = site_produto.find_all('img', class_='class="ui-pdp-image ui-pdp-gallery__figure__image"')
-
+                # Buscar imagens dentro do bloco do produto
+                imagem_tags = site_produto.find_all('img', class_='ui-pdp-image ui-pdp-gallery__figure__image')
+                
                 for imagem in imagem_tags:
-                    if 'data-src' in imagem.attrs:
-                        if 'youtube' in imagem['data-src']:
-                            video = imagem['data-src']
-                        elif not imagem['data-src'].endswith('.svg'):
-                            imagens.append(imagem['data-src'])
+                    if 'data-zoom' in imagem.attrs:
+                        imagens.append(imagem['data-zoom'])
 
                 imagens_str = ', '.join(imagens)
 
@@ -136,7 +135,7 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
                     date_sale_price_ends_default, tax_status_default, tax_class_default, in_stock_default,
                     stock_default, low_stock_amount_default, backorders_allowed_default, sold_individually_default,
                     weight_default, length_default, width_default, height_default, allow_customer_reviews_default,
-                    purchase_note_default, valor_desconto_str, valor_desconto_str, ', '.join(tags), ', '.join(tags),
+                    purchase_note_default, valor_desconto_str, valor_desconto_str, categoria, ', '.join(tags),
                     shipping_class_default, ', '.join(imagens), download_limit_default, download_expiry_days_default,
                     parent_default, grouped_products_default, upsells_default, cross_sells_default,
                     external_url_default, button_text_default, position_default, attribute_name_default,
