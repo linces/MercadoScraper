@@ -10,8 +10,6 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
 
 - **Coleta de Informações:** Percorre os resultados da pesquisa no Mercado Livre, coletando informações como título, preço, descrição, imagens, tags e SKU de cada produto.
 
-- **Transformações nos Dados:** Realiza transformações nos dados, aplicando um desconto de 12% ao preço original e gerando SKUs aleatórios para produtos sem SKU no site.
-
 - **Salvamento em CSV:** As informações coletadas são salvas em um arquivo CSV seguindo uma estrutura predefinida de colunas, compatível com o formato utilizado pelo WooCommerce.
 
 - **Navegação entre Páginas:** Lida com várias páginas de resultados, navegando para a próxima página até que não haja mais disponíveis.
@@ -42,12 +40,7 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
    - O arquivo CSV segue uma estrutura predefinida de colunas para importação no WooCommerce.
    - As informações extraídas incluem ID, tipo, SKU, nome, preço, descrição, imagens, tags, etc.
 
-#### 4. **Observações Importantes:**
-   - O script foi desenvolvido para fins educacionais e pode violar os termos de serviço do Mercado Livre.
-   - Foi projetado para economizar tempo no cadastro de produtos, automatizando a extração de informações do Mercado Livre.
-   - Use com responsabilidade e verifique as políticas do Mercado Livre antes de usar para evitar problemas legais.
-
-#### 5. **Customização:**
+#### 4. **Customização:**
    - O código inclui comentários detalhados para facilitar a compreensão e modificações.
    - Pode ser adaptado para outras categorias de produtos ou sites semelhantes.
 
