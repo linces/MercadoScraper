@@ -137,9 +137,9 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
                 descricao = site_produto.find('p', class_='ui-pdp-description__content')
 
                 if descricao:
-                    # Substituir todas as variações de "MercadoLivre" por "SoftArena" se o termo de substituição for informado
+                    # Substituir todas as variações de "MercadoLivre" por "termo_substituicao" se o termo de substituição for informado
                     if termo_substituicao:
-                        descricao_text = '<h1>' + produto.text + '</h1>\n\n' + descricao.text.strip().replace(termo_substituicao, "SoftArena")
+                        descricao_text = '<h1>' + produto.text + '</h1>\n\n' + descricao.text.strip().replace('MercadoLivre', termo_substituicao).replace('Mercado Livre', termo_substituicao).replace('Mercado-Livre', termo_substituicao).replace('MercadoLivre', termo_substituicao)
                     else:
                         descricao_text = '<h1>' + produto.text + '</h1>\n\n' + descricao.text.strip()
                 else:
