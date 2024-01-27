@@ -20,6 +20,29 @@ def get_price(node):
         return price
     return None
 
+def remove_duplicates(products):
+    unique_products = []
+    duplicate_products = []
+
+    seen_titles = set()
+    seen_descriptions = set()
+
+    for product in products:
+        title = product[3]
+        description = product[8]
+        value = product[26]
+
+        # Verificar se o título e descrição já foram vistos
+        if (title, description) in seen_titles and (title, value) in seen_descriptions:
+            duplicate_products.append(product)
+        else:
+            seen_titles.add((title, description))
+            seen_descriptions.add((title, value))
+            unique_products.append(product)
+
+    return unique_products, duplicate_products
+
+
 i = 1
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0'}
@@ -27,6 +50,9 @@ termo_busca = input("Digite o termo de busca: ")
 tags = input("Digite as tags separadas por vírgulas: ").split(',')
 categoria = input("Digite a categoria dos produtos: ")
 
+# Pergunta sobre o termo de substituição
+termo_substituicao = input("Digite o termo para substituir 'MercadoLivre' (ou pressione Enter para não substituir): ")
+termo_substituicao = termo_substituicao.strip()
 
 base_url = f"https://lista.mercadolivre.com.br/{termo_busca}"
 
@@ -70,6 +96,9 @@ attribute_visible_default = ''  # Visibilidade do atributo em branco
 attribute_global_default = ''  # Global do atributo em branco
 attribute_default_default = ''  # Valor padrão do atributo em branco
 
+# Listas para armazenar produtos e duplicatas
+products = []
+
 with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
     writer = csv.writer(arquivo_csv, delimiter=',')
     writer.writerow([
@@ -108,8 +137,11 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
                 descricao = site_produto.find('p', class_='ui-pdp-description__content')
 
                 if descricao:
-                    # Substituir todas as variações de "MercadoLivre" por "SoftArena"
-                    descricao_text = '<h1>' + produto.text + '</h1>\n\n' + descricao.text.strip().replace("MercadoLivre", "SoftArena").replace("Mercado Livre", "SoftArena").replace("Marcado Livre", "SoftArena").replace("MarcadoLivre", "SoftArena")
+                    # Substituir todas as variações de "MercadoLivre" por "SoftArena" se o termo de substituição for informado
+                    if termo_substituicao:
+                        descricao_text = '<h1>' + produto.text + '</h1>\n\n' + descricao.text.strip().replace(termo_substituicao, "SoftArena")
+                    else:
+                        descricao_text = '<h1>' + produto.text + '</h1>\n\n' + descricao.text.strip()
                 else:
                     # Quando não encontrar uma descrição, inserir o título do produto
                     descricao_text = '<h1>' + produto.text + '</h1>\n\n' + produto.text
@@ -130,6 +162,20 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
                     sku = '' + ''.join(random.choices('6789', k=13))
 
                 writer.writerow([
+                    i, 'simple', sku, produto.text, published_default, is_featured_default, visibility_default,
+                    short_description_default, descricao_text, date_sale_price_starts_default,
+                    date_sale_price_ends_default, tax_status_default, tax_class_default, in_stock_default,
+                    stock_default, low_stock_amount_default, backorders_allowed_default, sold_individually_default,
+                    weight_default, length_default, width_default, height_default, allow_customer_reviews_default,
+                    purchase_note_default, valor_desconto_str, valor_desconto_str, categoria, ', '.join(tags),
+                    shipping_class_default, ', '.join(imagens), download_limit_default, download_expiry_days_default,
+                    parent_default, grouped_products_default, upsells_default, cross_sells_default,
+                    external_url_default, button_text_default, position_default, attribute_name_default,
+                    attribute_value_default, attribute_visible_default, attribute_global_default,
+                    attribute_default_default, video
+                ])
+
+                products.append([
                     i, 'simple', sku, produto.text, published_default, is_featured_default, visibility_default,
                     short_description_default, descricao_text, date_sale_price_starts_default,
                     date_sale_price_ends_default, tax_status_default, tax_class_default, in_stock_default,
@@ -193,6 +239,15 @@ with open(nome_arquivo, mode='w', newline='', encoding='utf-8') as arquivo_csv:
             print(caminho_arquivo)
 
             break
+
+# Remover produtos duplicados
+unique_products, duplicate_products = remove_duplicates(products)
+
+# Exibir a quantidade de produtos duplicados e quais foram eles
+print(f"Quantidade de produtos duplicados encontrados: {len(duplicate_products)}")
+print("Produtos duplicados:")
+for duplicate in duplicate_products:
+    print(duplicate)
 
 print("Arquivo CSV salvo com sucesso:")
 print(caminho_arquivo)
