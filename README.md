@@ -20,7 +20,7 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
 
 - **Exibição de Informações:** Exibe no console informações relevantes sobre cada produto, como código, título, valor com desconto, link, descrição, imagens, vídeo, frete grátis, SKU e tags.
 
-- **Adaptação para SoftArena:** Substitui variações de "MercadoLivre" por "SoftArena" na descrição dos produtos.
+
 
 ## Uso do Script de Web Scraping para Produtos do Mercado Livre
 
@@ -28,13 +28,14 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
    - **Termo de Busca:** Um termo específico para pesquisar produtos no Mercado Livre.
    - **Tags:** Palavras-chave adicionais separadas por vírgulas para categorizar os produtos.
    - **Categoria:** A categoria à qual os produtos pertencem.
+   - **Substituição de Termo (Opcional):** Um termo para substituir "MercadoLivre" na descrição dos produtos.
 
 #### 2. **Execução do Script:**
    - O script é executado em um ambiente Python (certifique-se de ter o Python instalado).
    - Clone o repositório e navegue até o diretório onde o script está localizado.
    - Instale as bibliotecas necessárias (`requests`, `beautifulsoup4`, `csv`) especificadas no código.
    - Execute o script usando o comando `python nome_do_script.py`.
-   - Durante a execução, o script solicitará que você insira o termo de busca, tags e categoria.
+   - Durante a execução, o script solicitará que você insira o termo de busca, tags, categoria e, opcionalmente, um termo de substituição.
 
 #### 3. **Saída do Script:**
    - Um arquivo CSV é gerado no mesmo diretório do script.
@@ -56,7 +57,8 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
    - Termo de Busca: "câmera digital"
    - Tags: "tecnologia, fotografia"
    - Categoria: "Eletrônicos"
-
+   - Substituição de Termo (Opcional):** Um termo para substituir "MercadoLivre" na descrição dos produtos.
+ 
 2. **Execução:**
    - O script percorre o Mercado Livre, coleta informações sobre câmeras digitais e gera um arquivo CSV.
 
@@ -66,12 +68,6 @@ Ele gera o arquivo csv no formato de produtos que o woocomerce usa para fazer im
 4. **Customização:**
    - Se necessário, ajuste as configurações padrão e estrutura das colunas conforme suas necessidades.
 
-
-## Observações
-
-- O script foi originalmente desenvolvido para extrair informações de texturas do V-Ray no Mercado Livre, mas pode ser adaptado para outras categorias de produtos ou sites semelhantes.
-- O código inclui comentários detalhados explicando as diferentes partes e funcionalidades.
-- Este script foi desenvolvido para fins práticos e de automação. Utilize-o com responsabilidade e sempre respeite os termos de serviço do site de origem.
 
 ## "Disclaimer".
 
